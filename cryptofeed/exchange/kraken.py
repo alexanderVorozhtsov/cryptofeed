@@ -135,6 +135,16 @@ class Kraken(Feed):
                             ask=Decimal(msg[1]['a'][0]),
                             timestamp=timestamp,
                             receipt_timestamp=timestamp)
+    async def _spread(self, msg: dict, pair: str, timestamp: float ) :
+
+        await  self.callback(SPREAD, feed=self.id,
+                            symbol=pair,
+                            bid=Decimal(msg[1][0]),
+                            ask=Decimal(msg[1][1]),
+                            timestamp=float(msg[1][2]),
+                            bidVolume = Decimal(msg[1][3]),
+                            askVolume = Decimal(msg[1][4]),
+                            receipt_timestamp=timestamp)
 
     async def _book(self, msg: dict, pair: str, timestamp: float):
         delta = {BID: [], ASK: []}
